@@ -1,0 +1,1 @@
+- [GitHub connector bulk writes](github-connector-bulk-writes.md) — repository reads may work while sustained Git Data writes are blocked by the connector gateway.
