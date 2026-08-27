@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "StompFlow"
+description = "A responsive browser-based guitar effects board with real-time Web Audio processing, a drum machine, tuner, saved presets, and local backup tools for musicians on desktop and mobile browsers."
+version = "1.0.0"
+id = "artifacts/stompflow"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21165
+
+[services.development]
+run = "pnpm --filter @workspace/stompflow run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/stompflow", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/stompflow/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21165"
+BASE_PATH = "/"
