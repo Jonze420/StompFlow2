@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --espresso: #15110e;
+  --espresso-2: #211812;
+  --ink: #f3eadb;
+  --muted: #a99a87;
+  --line: rgba(243, 234, 219, 0.15);
+  --clay: #e7773f;
+  --clay-bright: #f29b63;
+  --sage: #9fb88c;
+  --sage-deep: #536451;
+  --cream: #f1dfc3;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'IBM Plex Mono', monospace;
+}
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; min-height: 100%; margin: 0; }
+body {
+  overflow: hidden;
+  background: var(--espresso);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.video-root {
+  position: relative;
+  width: min(100vw, 56.25vh);
+  height: min(177.7778vw, 100vh);
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--espresso);
+}
+
+.video-root::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: .09;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-body); }
+
+.scene-layer { position: absolute; inset: 0; overflow: hidden; }
+.scene-copy { position: absolute; z-index: 10; }
+.eyebrow {
+  color: var(--sage);
+  font-size: clamp(8px, 1.85vw, 12px);
+  letter-spacing: .22em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.display {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: .83;
+  text-transform: uppercase;
+}
+.micro {
+  color: var(--muted);
+  font-size: clamp(8px, 1.65vw, 11px);
+  letter-spacing: .08em;
+  line-height: 1.55;
+}
+.hairline {
+  height: 1px;
+  background: var(--line);
+  transform-origin: left center;
+}
+.scene-number {
+  color: rgba(243,234,219,.42);
+  font-size: 9px;
+  letter-spacing: .18em;
+}
+.corner-mark {
+  position: absolute;
+  top: 4.8%;
+  right: 7%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.corner-mark b {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 1px solid rgba(243,234,219,.32);
+  border-radius: 50%;
+  color: var(--clay-bright);
+  font-family: var(--font-display);
+  font-size: 11px;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(1px);
+}
+.pedal-cutout {
+  position: absolute;
+  z-index: 4;
+  width: 66%;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 24px rgba(0,0,0,.42));
+}
+.ui-panel {
+  border: 1px solid rgba(243,234,219,.19);
+  background: rgba(31,24,18,.88);
+  box-shadow: 0 20px 50px rgba(0,0,0,.28);
+  backdrop-filter: blur(12px);
+}
+.ui-label { color: var(--muted); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
+.meter-track { height: 4px; background: rgba(243,234,219,.13); overflow: hidden; }
+.meter-fill { height: 100%; background: var(--clay); transform-origin: left; }
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(3%, -2%, 0) rotate(4deg); }
+}
+@keyframes pulseLine {
+  0%, 100% { opacity: .32; transform: scaleX(.72); }
+  50% { opacity: .78; transform: scaleX(1); }
+}
+@keyframes scan {
+  0% { transform: translateY(-140%); opacity: 0; }
+  15%, 70% { opacity: .7; }
+  100% { transform: translateY(640%); opacity: 0; }
+}
+.drift { animation: drift 8s ease-in-out infinite; }
+.pulse-line { animation: pulseLine 2.4s ease-in-out infinite; }
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--clay);
+  box-shadow: 0 0 18px rgba(231,119,63,.52);
+  animation: scan 4.4s linear infinite;
+}
