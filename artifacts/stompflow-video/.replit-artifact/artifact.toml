@@ -1,0 +1,29 @@
+kind = "video"
+previewPath = "/stompflow-video/"
+title = "StompFlow Product Demo"
+description = "A portrait animated product demo for StompFlow, showcasing the guitar effects chain, drum machine, tuner, presets, and local audio workflow for mobile-first sharing."
+version = "1.0.0"
+id = "artifacts/stompflow-video"
+router = "path"
+videoAspectRatio = "9:16"
+
+[[services]]
+name = "web"
+paths = [ "/stompflow-video/" ]
+localPort = 24330
+
+[services.development]
+run = "pnpm --filter @workspace/stompflow-video run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/stompflow-video", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/stompflow-video/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24330"
+BASE_PATH = "/stompflow-video/"
